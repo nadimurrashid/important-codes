@@ -1,5 +1,5 @@
 where_to_download = r"C:\Users\Sazid\Desktop\Taxcalc_builds\Secondary_build"
-build_milestone = "Spring_2023"
+build_milestone = "y"
 
 import subprocess
 
