@@ -1,0 +1,62 @@
+xcel = sr.Get_Shared_Variables("excel_sheet") # input data
+path = sr.Get_Shared_Variables("main_file_path") # input data
+path2 = sr.Get_Shared_Variables("secondary_file_path") # input data
+import os
+import operator as op
+
+with open(path , "r+") as my_file:
+  data = my_file.read()
+data_into_list = data.split("\n")
+# print(data_into_list)
+my_file.close()
+
+def get_string(a):
+    if a != None:
+        return a
+    return '_'
+
+try:
+    for client_code in xcel:
+       if client_code[0] not in data_into_list:
+           # client_code_12 = get_string(client_code[12])
+           # client_code_13 = get_string(client_code[13])
+           # client_code_14 = get_string(client_code[14])
+           # client_code_15 = get_string(client_code[15])
+           # client_code_16 = get_string(client_code[16])
+           if client_code[0] == None:
+               continue
+           with open(path2,"a+") as f:
+               if (op.countOf(client_code[0]," ")) > 0:
+                   f.write(f"{client_code[0].replace(' ','').replace('N/A','_').upper()}\n")
+               else:
+                   f.write(f"{client_code[0].replace(' ','').replace('N/A','_')}\n")
+           with open(path, "a+") as file:
+               file.seek(0)
+               line = file.read(100)
+               if len(line) > 0:
+                   file.write("\n")
+               file.write(client_code[0])
+    my_file = open(path2, "r")
+    data1 = my_file.read()
+    new_data = data1.split("\n")
+    my_file.close()
+    ap = []
+    for i in new_data:
+        ap.append(i.split(','))
+
+except FileNotFoundError as e:
+    print("No new data got added to excel sheet. Error description : " , e)
+
+if os.path.exists(path2):
+  os.remove(path2)
+else:
+  print("Couldn't delete the file as the file does not exist.")
+
+# sr.Set_Shared_Variables("latest_client_code", ap)
+print(ap)
+
+
+sr.Set_Shared_Variables("latest_client_code", ap)
+
+
+
