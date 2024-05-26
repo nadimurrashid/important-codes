@@ -15,9 +15,7 @@ from pathlib import Path
 
 directory_path = Path(r'C:\Games')
 
-# List all files in the directory
 files = [file for file in directory_path.iterdir() if file.is_file()]
 
-# Print the list of files
 for file in files:
     print(file)
