@@ -1,0 +1,29 @@
+where_to_download = r"C:\Users\Sazid\Desktop\Taxcalc_builds\Secondary_build"
+build_milestone = "Spring_2023"
+
+import subprocess
+
+go_to_build_folder = "aws s3 ls s3://x/"+build_milestone+"/"
+
+get_download_folder_location = where_to_download
+folder_latest_output = subprocess.getoutput(go_to_build_folder)
+build_number = folder_latest_output.split('PRE')[-1].replace('/','').strip()
+# print(build_number)
+put_command = f'aws s3 ls s3://x/{build_milestone}/{build_number}/windows --recursive'
+get_latest_bucket_number = subprocess.getoutput(put_command)
+print(get_latest_bucket_number)
+get_latest_bucket = get_latest_bucket_number.split('windows')[-1].split('/')[1].strip()
+print(get_latest_bucket)
+put_command_to_get_size = f"aws s3 ls --summarize --human-readable --recursive s3://x/{build_milestone}/{build_number}/windows/{get_latest_bucket}"
+get_bucket_size = subprocess.getoutput(put_command_to_get_size)
+print(get_bucket_size)
+total_bucket_size = get_bucket_size.split('Size:')[-1].replace('MiB','').strip()
+
+compile_command_to_download = f"aws s3 sync s3://x/{build_milestone}/{build_number}/windows/{get_latest_bucket}" + ' ' + f"{get_download_folder_location}"
+downloaded_build = subprocess.getoutput(compile_command_to_download)
+print(downloaded_build)
+
+if downloaded_build != None:
+    x = 'complete'
+    # sr.Set_Shared_Variables("installation_status", x)  # output variable
+    print('pass')
