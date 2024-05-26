@@ -2,10 +2,8 @@ import re
 
 text = """Capital Allowances Example 5 Limited UTR: 5896733794 IRMark: KIDFRW26OKYBC6GO2VRPZAM7PFLDXLDW. Page 2 of 7. This is the next sentence. Another sentence here!"""
 
-# Define a regular expression pattern to find "IRMark" and capture text until the next full sentence
 pattern = r'IRMark:(.*?[.!?])'
 
-# Use re.search to find the first match
 match = re.search(pattern, text, re.DOTALL)
 
 if match:
