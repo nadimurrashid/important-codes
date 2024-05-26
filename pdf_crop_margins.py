@@ -19,22 +19,16 @@ for pdfs in t:
 
     collected_sentence = []
 
-    # Open the PDF file in read mode
     with open(unchanged_file, 'rb') as pdf_file:
-        # Create a PDF reader object
         pdf_reader = PyPDF2.PdfReader(pdf_file)
 
-        # Create a PDF writer object
         pdf_writer = PyPDF2.PdfWriter()
 
-        # Iterate through each page in the PDF
         for page_num in range(len(pdf_reader.pages)):
             page = pdf_reader.pages[page_num]
 
-            # Extract text from the page
             page_text = page.extract_text()
             print(page_text)
-            # Check if the specific text you want to remove is in the page
             if "IRMark:" in page_text:
                 target_text = "IRMArk"
 
@@ -44,7 +38,6 @@ for pdfs in t:
 
                 collected_sentence.append(new_text)
 
-                # If the text is not found, add the page to the new PDF
                 pdf_writer.add_page(page)
     print(collected_sentence)
 
