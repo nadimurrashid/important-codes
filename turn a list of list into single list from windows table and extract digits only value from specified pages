@@ -1,0 +1,20 @@
+FFS_Table_Single = [ item for sublist in FFS_Table for item in sublist ]
+start_index = FFS_Table_Single.index('Page 2')
+end_index = FFS_Table_Single.index('Page 3')
+cropped_ffs = FFS_Table_Single [start_index:end_index]
+print(cropped_ffs)
+
+data = ['Page 3', 'MainCompany_ZeuZUserKUmvvO', 'Consolidated Profit and Loss Account', 'For The Year Ended 31 December 2019', '2019', 'Notes', '£', 'TURNOVER', '3,150,000', 'Cost of sales', '(', '1,442,000', ')', 'GROSS PROFIT', '1,708,000', 'Distribution costs', '(', '238,000', ')', 'Administrative expenses', '(', '110,600', ')', 'Other operating income', '175,000', 'OPERATING PROFIT', '1,534,400', 'Other interest receivable and similar income', '35,000', 'Interest payable and similar charges', '(', '93,450', ')', 'PROFIT BEFORE TAXATION', '1,475,950', 'Tax on Profit', '(', '227,500', ')', 'PROFIT AFTER TAXATION BEING PROFIT FOR THE FINANCIAL YEAR ATTRIBUTABLE TO THE OWNERS OF THE PARENT', '1,248,450', 'The notes on ', 'pages 8 to 12', ' form part of these financial statements.']
+
+new_lst = []
+
+for item in data:
+    if float(item.replace(',','').isdigit()) == True:
+        current_index = data.index(item)
+        if data[current_index - 1] == '(' and data[current_index + 1] == ')':
+            x = (data[current_index - 1] + data[current_index] + data[current_index+1])
+            new_lst.append(x)
+        else:
+            new_lst.append(item)
+
+print(new_lst)
